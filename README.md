@@ -8,7 +8,10 @@ This model was built upon the model presented in
 
 Brandhorst, N., Erdal, D. and Neuweiler, I., 2021. Coupling saturated and unsaturated flow: comparing the iterative and the non-iterative approach. Hydrology and Earth System Sciences, 25(7), pp.4041-4059.
 
+For a full folder with all datasets used in the paper, please refer to the Zenodo file.
+
 ---
+
 
 ## 🧠 Model Rationale
 
