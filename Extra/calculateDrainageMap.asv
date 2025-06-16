@@ -1,0 +1,101 @@
+function drainageMap = calculateDrainageMap(DEM, x_o, y_o)
+[rows, cols] = size(DEM);
+drainageMap = zeros(rows, cols); % Initialize drainage map
+
+% Calculate flow direction
+flowDir = calculateFlowDirection(DEM,x_o,y_o);
+
+% Queue for cells to process
+queue = [x_o, y_o];
+
+% Process cells until queue is empty
+for ii = 1:rows
+    % Pop the top element from the queue
+    current = queue(1,:);
+    queue(1,:) = [];
+    x = current(1);
+    y = current(2);
+
+    % Get downstream neighbor
+    [nx, ny] = getDownstreamCell(x, y, flowDir);
+    if (~isempty(nx)) && (~isempty(ny))
+        % Check if neighbor is within bounds and not the outlet cell
+        if nx >= 1 && nx <= cols && ny >= 1 && ny <= rows && ~(nx == x_o && ny == y_o)
+            % Check if neighbor is not already marked and drains to the outlet
+            if drainageMap(ny, nx) == 0 && flowDir(ny, nx) == opposite(flowDir(y, x))
+                % Mark neighbor as draining
+                drainageMap(ny, nx) = 1;
+                % Add neighbor to the queue for processing
+                queue = [queue; nx, ny];
+            end
+        end
+    end
+end
+end
+
+function flowDir = calculateFlowDirection(DEM,x_o,y_o)
+% D8 algorithm to calculate flow direction
+[rows, cols] = size(DEM);
+flowDir = zeros(rows, cols);
+
+for i = 1:rows
+    for j = 1:cols
+        [dx, dy] = getNeighborDeltas(i, j, rows, cols);
+        if i ~= x_o && j ~= y_o
+            [row, col] = getDownstreamCell(i, j, DEM, dx, dy);
+            flowDir(i, j) = getDirection(row, col, i, j);
+        else
+            flowDir(i, j) = 0;
+        end
+    end
+end
+end
+
+function [row, col] = getDownstreamCell(i, j, DEM, dx, dy)
+% Find the downstream cell based on the steepest slope
+try
+    [slopes, indices] = sort((DEM(i, j) - DEM(dx, dy)) ./ sqrt((i - dx).^2 + (j - dy).^2), 'descend');
+    row = dx(indices(1));
+    col = dy(indices(1));
+catch me
+    row = [];
+    col = [];
+end
+end
+
+function [dx, dy] = getNeighborDeltas(i, j, rows, cols)
+% Get indices of neighboring cells
+dx = [i-1, i-1, i-1, i, i+1, i+1, i+1, i];
+dy = [j-1, j, j+1, j+1, j+1, j, j-1, j-1];
+% Ensure indices are within bounds
+dx = max(1, min(dx, rows));
+dy = max(1, min(dy, cols));
+end
+
+function dir = getDirection(row, col, i, j)
+% Calculate flow direction based on downstream cell
+if row == i - 1 && col == j - 1
+    dir = 1;
+elseif row == i - 1 && col == j
+    dir = 2;
+elseif row == i - 1 && col == j + 1
+    dir = 3;
+elseif row == i && col == j + 1
+    dir = 4;
+elseif row == i + 1 && col == j + 1
+    dir = 5;
+elseif row == i + 1 && col == j
+    dir = 6;
+elseif row == i + 1 && col == j - 1
+    dir = 7;
+elseif row == i && col == j - 1
+    dir = 8;
+else
+    dir = 0; % No flow
+end
+end
+
+function opp = opposite(dir)
+% Find opposite direction
+opp = mod(dir + 3, 8) + 1;
+end

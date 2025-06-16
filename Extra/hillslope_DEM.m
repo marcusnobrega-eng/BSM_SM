@@ -1,0 +1,106 @@
+function [Z,Area,Ksat,Sy,GW_IC,per,dir_val,neu_val,Surf_DEM,X,Y] = hillslope_DEM(E,H,L,n,omega,dx,dy,Width_Function,ksat,sy,gw_IC,Aquif_Tickness)
+% Generates a surface DEM following:
+% Z(x,y) = E + H.*(x/L).^n + omega*y.^2;
+% E: datum reference elevation
+% H: Elevation at the top of the hillslope with respect to the reference
+% datum
+% L: Length of the hillslope
+% n: profile curvature parameter
+% omega: plan curvature parameter
+% dx: x discretization [m]
+% dy: y discretization [m]
+% Width_Function: hillslope width function [m]
+% ksat: sat. hyd. conductivity
+% sy: specific yield
+% gw_IC: gw initial water depth
+% dir_index: index to represent dirichlet cells at the outlet
+% neu_index: index to represesent neuman cells at the borders
+% Aquif_Tickness: Soil depth [m]
+
+nx = L/dx;
+if floor(nx)~=ceil(nx)
+    error('Please, enter a mesh for x that produces integer finite elements.')
+end
+
+max_width = 0;
+% Maximum Width
+for i = 1:nx
+    max_width = max(max_width,Width_Function((i)*dx));
+end
+
+close all;
+ny = max_width/dy;
+if floor(ny)~=ceil(ny)
+    error('Please, enter a mesh for y that produces integer finite elements.')
+end
+
+idx = zeros(ny,nx);
+for i = 1:nx
+    try
+    width_i = Width_Function((i-1)*dx + dx/2); % [m]
+    ny_i = ceil(width_i/dy);
+    idx((ny/2 - ny_i/2+1):(ny/2 + ny_i/2),i) = 1;
+    catch ME
+        ttt = 1;
+    end
+end
+idx = logical(idx);
+[X,Y] = meshgrid(dx:dx:L,(-max_width/2 + dy/2):dy:(max_width/2 - dy/2));
+X(idx ~= 1) = nan;
+Y(idx ~= 1) = nan;
+idx = double(idx);
+
+Z = idx*E + idx*H.*((X)/L).^n + omega*Y.^2;
+Ksat = ksat*idx;
+Sy = sy*idx;
+GW_IC = gw_IC*idx;
+
+% Plotting
+set(gcf, 'Units', 'normalized', 'OuterPosition', [.25, .25, .5, .5]);
+surf(X,Y,Z);
+xlabel('x [m]','Interpreter','latex','FontSize',12)
+ylabel('y [m]','Interpreter','latex','FontSize',12)
+zlabel('z [m]','Interpreter','latex','FontSize',12)
+colormap('turbo');
+box on;
+grid on
+view(0,90);
+clb = colorbar;
+ylabel(clb,'Elevation [m]','Interpreter','latex','FontSize',14);
+
+shading interp;
+set(gca,'FontName','Garamond','FontSize',12)
+exportgraphics(gcf,'Output/Input_Data/DEM_hillslope_generated.png','Resolution',300)
+
+% Boundary Conditions
+per = double(bwperim(~isnan(Z)));
+n_dir = length(find(Z == min(min(Z)))); % Number of dirchlet cells
+per(per == 1) = n_dir + 1; % Neumann B.C
+idx_out = Z == min(min(Z)); % Outlet cells
+per(idx_out == 1) = 1:1:n_dir; % Dirchlet B.C.
+% n_dir = length(~isnan(per(:,1))); % Number of dirichlet cells
+per(isnan(Z)) = nan;
+per(~isnan(per(:,1))) = 1:1:n_dir; % Dirchlet B.C
+
+% Boundary Values
+pressure_head = 0;
+dir_val = Z(idx_out) + pressure_head; % Total Head
+neu_val = 0; % m/s
+
+% Surf_DEM = DEM + Aquif_Tickness
+Surf_DEM = Z + Aquif_Tickness ;
+
+% Surface Area
+Area = (dx*dy)*sum(sum(~isnan(Z))); % m2
+
+idx_nan = isnan(Z);
+% Nan to -9999
+per(idx_nan) = -9999;
+Z(idx_nan) = -9999;
+Surf_DEM(idx_nan) = -9999;
+Sy(idx_nan) = -9999;
+GW_IC(idx_nan) = -9999;
+Ksat(idx_nan) = -9999;
+
+
+end
