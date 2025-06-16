@@ -4,6 +4,10 @@
 
 **BSM-2D** is a two-dimensional, physically based hydrologic model that solves the transient Boussinesq equation for unconfined groundwater flow. It is coupled with an explicit unsaturated zone (UZ) reservoir model to represent vertical moisture dynamics. This framework provides a computationally efficient alternative to full Richards Equation simulations at the hillslope scale while preserving physical interpretability.
 
+This model was built upon the model presented in 
+
+Brandhorst, N., Erdal, D. and Neuweiler, I., 2021. Coupling saturated and unsaturated flow: comparing the iterative and the non-iterative approach. Hydrology and Earth System Sciences, 25(7), pp.4041-4059.
+
 ---
 
 ## 🧠 Model Rationale
@@ -27,53 +31,77 @@ At intermediate scales (10–100 m), fully solving the Richards equation in 3D i
 
 ---
 
-## 🧮 Governing Equations
+## 📄 Governing Equations
 
 ### 1. Transient 2D Boussinesq Equation
 
-\[
-\frac{\partial}{\partial x} \left( K_x h \frac{\partial h}{\partial x} \right) + 
-\frac{\partial}{\partial y} \left( K_y h \frac{\partial h}{\partial y} \right) + 
-N^*(x, y, t) = S_y(x, y, t) \frac{\partial h}{\partial t}
-\]
+<div align="center">
 
-Where:
-- \( h(x,y,t) \): water table elevation [L]
-- \( K_x, K_y \): saturated hydraulic conductivity [L/T]
-- \( N^*(x,y,t) \): recharge rate from UZ [L/T]
-- \( S_y(x,y,t) \): specific yield [–]
+$$
+\frac{\partial}{\partial x} \left( K_x h \frac{\partial h}{\partial x} \right) +
+\frac{\partial}{\partial y} \left( K_y h \frac{\partial h}{\partial y} \right) +
+N^*(x, y, t) = S_y(x, y, t) \frac{\partial h}{\partial t}
+$$
+
+</div>
+
+**Where:**
+- `h(x, y, t)`: water table elevation [L]  
+- `K_x, K_y`: saturated hydraulic conductivity [L/T]  
+- `N^*(x, y, t)`: recharge rate from UZ [L/T]  
+- `S_y(x, y, t)`: specific yield [–]  
 
 ---
 
 ### 2. Specific Yield (van Genuchten-based)
 
-\[
-S_y(h) = (\theta_s - \theta_r) \left[1 - \left(1 + (\alpha(h - y))^n \right)^{- \frac{n+1}{n}} \right]
-\]
+<div align="center">
 
-Where:
-- \( \theta_s, \theta_r \): saturated and residual moisture content [–]
-- \( \alpha, n \): van Genuchten parameters [1/L], [–]
-- \( y \): bedrock elevation [L]
+$$
+S_y(h) = (\theta_s - \theta_r) \left[1 - \left(1 + \left(\alpha(h - y)\right)^n \right)^{- \frac{n+1}{n}} \right]
+$$
+
+</div>
+
+**Where:**
+- `θ_s, θ_r`: saturated and residual moisture content [–]  
+- `α, n`: van Genuchten parameters [1/L], [–]  
+- `y`: bedrock elevation [L]  
 
 ---
 
-### 3. Explicit UZ Linear Reservoir Model
+### 3. Unsaturated Zone Linear Reservoir
 
-\[
+<div align="center">
+
+$$
 \frac{dS_{UZ}}{dt} = I^* - N^* \quad ; \quad N^* = k \cdot S_{UZ}
-\]
+$$
+
+</div>
 
 Discretized as:
 
-\[
-S_{UZ}^{t+\Delta t} = S_{UZ}^t + \Delta t (I^t - k S_{UZ}^t)
-\]
+<div align="center">
 
-Where:
-- \( S_{UZ} \): unsaturated zone storage [L]
-- \( I \): irrigation or rainfall input [L/T]
-- \( k \): recession constant [1/T]
+$$
+S_{UZ}^{t+\Delta t} = S_{UZ}^t + \Delta t \cdot (I^t - k \cdot S_{UZ}^t)
+$$
+
+</div>
+
+**Where:**
+- `S_{UZ}`: unsaturated zone storage [L]  
+- `I`: input irrigation or rainfall [L/T]  
+- `k`: drainage/recession coefficient [1/T]  
 
 ---
 
+## 🗂️ Repository Structure
+
+📁 BSM_2D_Model/
+├── 📂 GW/ # MATLAB groundwater solver codes
+├── 📂 inputs/ # Excel spreadsheets for inputs (DEM, params, forcing)
+├── 📂 outputs/ # Model outputs (e.g., heads, discharge, Sy)
+├── 📂 Particle_Filter/ # Particle filter source codes
+├── 📂 Other folders are from paper results and are not directly required to run the model
