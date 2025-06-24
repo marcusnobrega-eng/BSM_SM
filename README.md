@@ -4,11 +4,13 @@
 
 **BSM-2D** is a two-dimensional, physically based hydrologic model that solves the transient Boussinesq equation for unconfined groundwater flow. It is coupled with an explicit unsaturated zone (UZ) reservoir model to represent vertical moisture dynamics. This framework provides a computationally efficient alternative to full Richards Equation simulations at the hillslope scale while preserving physical interpretability.
 
-This model was built upon the model presented in 
+The application results of this model are presented in the submitted manuscript titled *"Identifying the State Dependence of Effective Material Properties in a Simplified Hydrologic Hillslope Model,"* which is currently under peer review.
+
+This model was built upon the model presented in:
 
 Brandhorst, N., Erdal, D. and Neuweiler, I., 2021. Coupling saturated and unsaturated flow: comparing the iterative and the non-iterative approach. Hydrology and Earth System Sciences, 25(7), pp.4041-4059.
 
-For a full folder with all datasets used in the paper, please refer to the Zenodo file.
+For a full folder with all datasets used in the paper, please refer to the Zenodo file described in the paper.
 
 ---
 
