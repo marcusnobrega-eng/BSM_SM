@@ -51,10 +51,10 @@ $$
 </div>
 
 **Where:**
-- `h(x, y, t)`: water table elevation [L]  
-- `K_x, K_y`: saturated hydraulic conductivity [L/T]  
-- `N^*(x, y, t)`: recharge rate from UZ [L/T]  
-- `S_y(x, y, t)`: specific yield [–]  
+- $h(x, y, t)$: water table elevation [L]  
+- $K_x$, $K_y$: saturated hydraulic conductivity [L/T]  
+- $N^*(x, y, t)$: recharge rate from UZ [L/T]  
+- $S_y(x, y, t)$: specific yield [–]  
 
 ---
 
@@ -69,9 +69,9 @@ $$
 </div>
 
 **Where:**
-- `θ_s, θ_r`: saturated and residual moisture content [–]  
-- `α, n`: van Genuchten parameters [1/L], [–]  
-- `y`: bedrock elevation [L]  
+- $\theta_s$, $\theta_r$: saturated and residual moisture content [–]  
+- $\alpha$, $n$: van Genuchten parameters [1/L], [–]  
+- $y$: bedrock elevation [L]  
 
 ---
 
@@ -96,9 +96,9 @@ $$
 </div>
 
 **Where:**
-- `S_{UZ}`: unsaturated zone storage [L]  
-- `I`: input irrigation or rainfall [L/T]  
-- `k`: drainage/recession coefficient [1/T]  
+- $S_{UZ}$: unsaturated zone storage [L]  
+- $I$: input irrigation or rainfall [L/T]  
+- $k$: drainage/recession coefficient [1/T]  
 
 ---
 
