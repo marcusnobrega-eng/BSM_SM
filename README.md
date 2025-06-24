@@ -1,6 +1,6 @@
 # 🌍 BSM-2D: Boussinesq–Soil Moisture 2D Hydrologic Model
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![License: CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
 
 **BSM-2D** is a two-dimensional, physically based hydrologic model that solves the transient Boussinesq equation for unconfined groundwater flow. It is coupled with an explicit unsaturated zone (UZ) reservoir model to represent vertical moisture dynamics. This framework provides a computationally efficient alternative to full Richards Equation simulations at the hillslope scale while preserving physical interpretability.
 
