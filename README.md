@@ -100,6 +100,9 @@ $$
 
 ---
 
+## 🗂️ Input Data
+All input data can be conveniently entered directly into the provided Excel spreadsheet. Each variable within the sheet is clearly defined and thoroughly documented to ensure accurate and user-friendly data entry.
+
 ## 🗂️ Repository Structure
 
 📁 BSM_2D_Model/
