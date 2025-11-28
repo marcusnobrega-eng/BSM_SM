@@ -28,7 +28,7 @@ general_input(1:6,3) = table2array(input_data(8:13,5));
 % Setup Name
 Setup_Name = char(table2array(input_data(2,8)));
 % flag_PF
-flag_PF = table2array(input_data(7,2));
+flag_PF = table2array(input_data(9,2));
 
 %% Boundary Conditions
 % B.C Indexes and Values

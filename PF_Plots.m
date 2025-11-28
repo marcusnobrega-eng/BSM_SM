@@ -11,12 +11,14 @@ time_plot_days = tSave/(3600*24);       % days
 
 close all
 % load z_estimated.csv
-obs_dir = 'C:\Users\marcu\OneDrive - University of Arizona\Documents\2D_Boussinesq_Model\Observed_Hydrograph.csv';
+% obs_dir = 'C:\Users\marcu\OneDrive - University of Arizona\Documents\2D_Boussinesq_Model\Observed_Hydrograph.csv';
+obs_dir = 'C:\Users\marcu\OneDrive - University of Arizona\Documents\2D_Boussinesq_Model\Observed_Hydrograph_60min.csv';
 z_estimated = table2array(readtable(obs_dir));
 discharge_data = z_estimated(:,2);
 discharge_data = discharge_data(1:size(dischargeStore_PF,1));
 
-bechmark_dir = 'C:\Users\marcu\OneDrive - University of Arizona\Documents\2D_Boussinesq_Model\Calibration\calibrated_discharge.csv';
+% bechmark_dir = 'C:\Users\marcu\OneDrive - University of Arizona\Documents\2D_Boussinesq_Model\Calibration\calibrated_discharge.csv';
+bechmark_dir = 'C:\Users\marcu\OneDrive - University of Arizona\Documents\2D_Boussinesq_Model\Calibration\calibrated_discharge_60min.csv';
 z_estimated = table2array(readtable(bechmark_dir));
 discharge_benchmark = z_estimated(:,2); % benchmark discharge
 

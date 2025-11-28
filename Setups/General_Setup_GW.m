@@ -6,7 +6,9 @@ function [ cmf ] = General_Setup_GW()
 % dir = 'C:\Users\marcu\OneDrive - University of Arizona\Documents\2D_Boussinesq_Model\Inverse_Problems\Convergent_Hillslope\Unsteady_State\Input_Data_GW_Model_convergent_unsteady_state';
 % dir = 'C:\Users\marcu\OneDrive - University of Arizona\Documents\2D_Boussinesq_Model\Inverse_Problems\Flat_Hillslope\Input_Data_GW_Model_flat_drainage.xlsx';
 % dir = 'C:\Users\marcu\OneDrive - University of Arizona\Documents\GitHub\2D_Boussinesq_Model\Input_Data_GW_Model_PERTH_Only_K';
-dir = 'C:\Users\marcu\OneDrive - University of Arizona\Documents\GitHub\2D_Boussinesq_Model\Input_Data_GW_Model_PERTH';
+% dir = 'C:\Users\marcu\OneDrive - University of Arizona\Documents\GitHub\2D_Boussinesq_Model\Input_Data_GW_Model_PERTH';
+dir = 'C:\Users\marcu\Documents\GitHub\BSM_SM\Input_Data_GW_Model_PERTH_60min.xlsx';
+
 % dir = 'C:\Users\marcu\OneDrive - University of Arizona\Documents\2D_Boussinesq_Model\Input_Data_GW_Model';
 % dir = 'C:\Users\marcu\OneDrive - University of Arizona\Documents\2D_Boussinesq_Model\Inverse_Problems\Uniform_Hillslope\Unsteady_State\(a)\Input_Data_GW_Model_uniform_a.xlsx';
 flag_plot = 1;
