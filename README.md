@@ -4,11 +4,13 @@
 
 **BSM-2D** is a two-dimensional, physically based hydrologic model that solves the transient Boussinesq equation for unconfined groundwater flow. It is coupled with an explicit unsaturated zone (UZ) reservoir model to represent vertical moisture dynamics. This framework provides a computationally efficient alternative to full Richards Equation simulations at the hillslope scale while preserving physical interpretability.
 
-This model was built upon the model presented in 
+The application results of this model are presented in the submitted manuscript titled *"Identifying the State Dependence of Effective Material Properties in a Simplified Hydrologic Hillslope Model,"* which is currently under peer review.
+
+This model was built upon the model presented in:
 
 Brandhorst, N., Erdal, D. and Neuweiler, I., 2021. Coupling saturated and unsaturated flow: comparing the iterative and the non-iterative approach. Hydrology and Earth System Sciences, 25(7), pp.4041-4059.
 
-For a full folder with all datasets used in the paper, please refer to the Zenodo file.
+For a full folder with all datasets used in the paper, please refer to the Zenodo file described in the paper.
 
 ---
 
@@ -49,10 +51,10 @@ $$
 </div>
 
 **Where:**
-- `h(x, y, t)`: water table elevation [L]  
-- `K_x, K_y`: saturated hydraulic conductivity [L/T]  
-- `N^*(x, y, t)`: recharge rate from UZ [L/T]  
-- `S_y(x, y, t)`: specific yield [–]  
+- $h(x, y, t)$: water table elevation [L]  
+- $K_x$, $K_y$: saturated hydraulic conductivity [L/T]  
+- $N^*(x, y, t)$: recharge rate from UZ [L/T]  
+- $S_y(x, y, t)$: specific yield [–]  
 
 ---
 
@@ -67,9 +69,9 @@ $$
 </div>
 
 **Where:**
-- `θ_s, θ_r`: saturated and residual moisture content [–]  
-- `α, n`: van Genuchten parameters [1/L], [–]  
-- `y`: bedrock elevation [L]  
+- $\theta_s$, $\theta_r$: saturated and residual moisture content [–]  
+- $\alpha$, $n$: van Genuchten parameters [1/L], [–]  
+- $y$: bedrock elevation [L]  
 
 ---
 
@@ -94,14 +96,18 @@ $$
 </div>
 
 **Where:**
-- `S_{UZ}`: unsaturated zone storage [L]  
-- `I`: input irrigation or rainfall [L/T]  
-- `k`: drainage/recession coefficient [1/T]  
+- $S_{UZ}$: unsaturated zone storage [L]  
+- $I$: input irrigation or rainfall [L/T]  
+- $k$: drainage/recession coefficient [1/T]  
 
 ---
 
-## 🗂️ Repository Structure
+## 🗂️ Input Data
 
+All input data can be conveniently entered directly into the provided Excel spreadsheet. Each variable within the sheet is clearly defined and thoroughly documented to ensure accurate and user-friendly data entry.
+
+## 🗂️ Repository Structure
+```bash
 📁 BSM_2D_Model/
 ├── 📂 GW/ # MATLAB groundwater solver codes
 ├── 📂 inputs/ # Excel spreadsheets for inputs (DEM, params, forcing)
